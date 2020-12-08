@@ -49,6 +49,34 @@ public class MyLinkedList<K> {
 		return null;
 	}
 
+	public INode<K> remove(INode<K> node) {
+
+		INode<K> removedNode = search(node.getKey());
+		if (removedNode != null) {
+			INode<K> tempNode = this.head;
+			while (tempNode.getNext() != removedNode) {
+				tempNode = tempNode.getNext();
+			}
+			tempNode.setNext(removedNode.getNext());
+			return removedNode;
+		} else
+			return null;
+	}
+
+	public int size() {
+		int count = 0;
+		INode<K> tempNode = this.head;
+		while (tempNode != null) {
+			count++;
+			tempNode = tempNode.getNext();
+		}
+		return count;
+	}
+
+	public void printNodes() {
+		System.out.println(head);
+	}
+
 	public String toString() {
 		return "myLinkedListNodes { " + head + " }}";
 	}

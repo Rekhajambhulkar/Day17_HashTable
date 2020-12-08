@@ -10,13 +10,13 @@ import com.myhashmap.MyMapNode;
 public class MyLinkedHashMap<K, V> {
 	private final int numBuckets;
 	ArrayList<MyLinkedList> myBucketArray;
-	
+
 	private int getBucketIndex(K key) {
 		int hashCode = Math.abs(key.hashCode());
 		int index = hashCode % numBuckets;
 		return index;
 	}
-	
+
 	public MyLinkedHashMap() {
 		this.numBuckets = 10;
 		this.myBucketArray = new ArrayList<>(numBuckets);
@@ -48,6 +48,25 @@ public class MyLinkedHashMap<K, V> {
 			myMapNode.setValue(value);
 		}
 	}
+
+	public boolean remove(K key) {
+
+		int index = this.getBucketIndex(key);
+
+		MyLinkedList<K> linkedList = this.myBucketArray.get(index);
+		if (linkedList == null) {
+			return false;
+		}
+		MyMapNode<K, V> myMapNode = (MyMapNode<K, V>) linkedList.search(key);
+
+		if (myMapNode == null) {
+			return false;
+		} else {
+			linkedList.remove(myMapNode);
+			return (myMapNode.getKey().equals(key));
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "MyLinkedHashMap List { " +myBucketArray+ " }";
